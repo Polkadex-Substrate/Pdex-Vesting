@@ -6,10 +6,11 @@ import PolkaAbi from "./Abi.json";
 import "./App.css";
 
 class App extends Component {
-  state = {loading: false, contractAddress:null,userTokens:0,vestedTokens:0,totalSupply:0,owner:0 };
+  state = { loading: false, contractAddress: null, userTokens: 0, vestedTokens: 0, totalSupply: 0, owner: 0 };
 
   componentDidMount = async () => {
     try {
+      
       //Contract address
       const PolkaAddress = "0xF59ae934f6fe444afC309586cC60a84a0F89Aaea"
       // Get network provider and web3 instance.
@@ -24,12 +25,11 @@ class App extends Component {
         PolkaAbi,
         PolkaAddress
       );
-      console.log(this.PolkaDexInstance, "------------");
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.listenToTokenTransfer()
-      this.setState({loading: true, contractAddress: PolkaAddress}, this.updateUserTokens);
+      this.setState({ loading: true, contractAddress: PolkaAddress }, this.updateUserTokens);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -39,50 +39,36 @@ class App extends Component {
     }
   };
 
-buttonClick = async () => {
-let VestedTokens = await this.PolkaDexInstance.methods.VestedTokens(this.accounts[0]).call({ from: this.accounts[0]})
-let balance = await this.PolkaDexInstance.methods.balanceOf(this.accounts[0]).call()
-let claimVestedTokens
-if(VestedTokens > 0) {
-  claimVestedTokens = await this.PolkaDexInstance.methods.ClaimAfterVesting().send({ from: this.accounts[0]}, function(err,data){
-    console.log(err,"err");
-    console.log(data,"data")
-  });  
-}
-else {
-  alert('User has 0 Vested balance')
-}
+  buttonClick = async () => {
+    let VestedTokens = await this.PolkaDexInstance.methods.VestedTokens(this.accounts[0]).call({ from: this.accounts[0] })
+    let claimVestedTokens
+    if (VestedTokens > 0) {
+      claimVestedTokens = await this.PolkaDexInstance.methods.ClaimAfterVesting().send({ from: this.accounts[0] }, function (err, data) {
+        console.log(err, "err");
+        console.log(data, "data")
+      });
+    }
+    else {
+      alert('User has 0 Vested balance')
+    }
+    console.log(claimVestedTokens, "claimVestedTokens");
+
+  }
+
+  updateUserTokens = async () => {
+    let owner = await this.PolkaDexInstance.methods.ShowOwner().call();
+    let totalSupply = await this.PolkaDexInstance.methods.totalSupply().call();
+    let userTokens = await this.PolkaDexInstance.methods.balanceOf(this.accounts[0]).call();
+    let vestedTokens = await this.PolkaDexInstance.methods.VestedTokens(this.accounts[0]).call()
 
 
 
+    this.setState({ userTokens: userTokens / 10 ** 18, vestedTokens: vestedTokens / 10 ** 18, totalSupply: totalSupply / 10 ** 18, owner: owner });
+  }
 
-console.log(this.accounts[0], "Current account address")
-console.log(claimVestedTokens, "claimVestedTokens");
-    console.log(balance, "balance");
-    
-    // console.log(owner, "owner");
-
-console.log(VestedTokens,"vested balance");
-  // console.log(totalSupply, "totalSupply");
-
-
-
-}
-
-updateUserTokens = async () => {
-  let userTokens = await this.PolkaDexInstance.methods.balanceOf(this.accounts[0]).call();
-  let vestedTokens = await this.PolkaDexInstance.methods.VestedTokens(this.accounts[0]).call({ from: "0x70cE694Ea3096763295Eb38977c41890808A34Fa"})
-  let totalSupply = await this.PolkaDexInstance.methods.totalSupply().call({from: "0xF59ae934f6fe444afC309586cC60a84a0F89Aaea"});
-  let owner = await this.PolkaDexInstance.methods.ShowOwner().call({from: "0xF59ae934f6fe444afC309586cC60a84a0F89Aaea"});
-
-
-
-  this.setState({userTokens:userTokens/10**18, vestedTokens:vestedTokens/10**18, totalSupply:totalSupply/10**18,owner:owner});
-}
-
-listenToTokenTransfer = () => {
-  this.PolkaDexInstance.events.Transfer({to: this.accounts[0]}).on("data", this.updateUserTokens)
-}
+  listenToTokenTransfer = () => {
+    this.PolkaDexInstance.events.Transfer({ to: this.accounts[0] }).on("data", this.updateUserTokens)
+  }
 
   render() {
     if (!this.state.loading) {
