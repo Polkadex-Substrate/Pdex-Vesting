@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PolkaDex from "./contracts/PolkaDex.json";
 import getWeb3 from "./getWeb3";
 import PolkaAbi from "./Abi.json";
-// import Logo from "";
 
 import "./App.css";
 
