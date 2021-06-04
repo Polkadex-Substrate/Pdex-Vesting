@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -19,4 +19,44 @@
 
 .App-link {
   color: #09d3ac;
+} */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  text-align: center;
+  min-width: 30%;
+  padding: 15px 15px 31px 15px;
+  color: white;
+  background-color: #2E2F39;
+  font-size: 20px;
+  border-radius: 10px;
+}
+.navBar{
+  background-color: #1C1C26;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  height: 60px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px #f6f6f642 solid;
+}
+
+.logo {
+  height: 80%;
+}
+.cardContainer{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+    background: #1C1C26;
+}
+.vestedButton{
+  background: #E6007A;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 18px;
 }

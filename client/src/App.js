@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import PolkaDex from "./contracts/PolkaDex.json"
+import PolkaDex from "./contracts/PolkaDex.json";
 import getWeb3 from "./getWeb3";
 import PolkaAbi from "./Abi.json";
+// import Logo from "";
 
 import "./App.css";
 
 class App extends Component {
-  state = { loading: false, contractAddress: null, userTokens: 0, vestedTokens: 0, totalSupply: 0, owner: 0 };
+  state = { loading: false, contractAddress: null, userTokens: 0, vestedTokens: 0, totalSupply: 0, owner: 0, image: '../Logo.png' };
 
   componentDidMount = async () => {
     try {
@@ -42,15 +43,11 @@ class App extends Component {
   buttonClick = async () => {
     let VestedTokens = await this.PolkaDexInstance.methods.VestedTokens(this.accounts[0]).call({ from: this.accounts[0] })
     let claimVestedTokens
-    if (VestedTokens > 0) {
       claimVestedTokens = await this.PolkaDexInstance.methods.ClaimAfterVesting().send({ from: this.accounts[0] }, function (err, data) {
         console.log(err, "err");
         console.log(data, "data")
       });
-    }
-    else {
-      alert('User has 0 Vested balance')
-    }
+    
     console.log(claimVestedTokens, "claimVestedTokens");
 
   }
@@ -75,16 +72,19 @@ class App extends Component {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <button type="button" onClick={this.buttonClick}>Click me</button>
-        <p>Your contract address is <b>{this.state.contractAddress}</b></p>
-        <p>The owner of the contract is <b>{this.state.owner}</b></p>
-        <p>Your total supply is <b>{this.state.totalSupply}</b></p>
-        <p>You currently have <b>{(this.state.vestedTokens)}</b> vested balance</p>
-        <p>You currently have <b>{(this.state.userTokens)}</b> balance</p>
+      <div>
+        <div className="navBar">
+          <img className="logo" src={this.state.image}/>
+        </div>
+      <div className="cardContainer">
+      <div className="card">
+        <p>Contract Address: <b>{this.state.contractAddress}</b></p>
+        <p>Total Supply: <b>{this.state.totalSupply}</b></p>
+        <p>Vested Balance: <b>{(this.state.vestedTokens)}</b></p>
+        <p>Current Balance: <b>{(this.state.userTokens)}</b></p>
+        <button type="button" onClick={this.buttonClick} className="vestedButton">Claim Vested Tokens</button>
+      </div>
+      </div>
       </div>
     );
   }
