@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/polkadex-second-tranche/precache-manifest.e56cb375e2af9c3bf827687b710fc6ef.js"
+  "/polkadex-second-tranche/precache-manifest.741fb1ca3fb4642416034051efa75bca.js"
 );
 
 self.addEventListener('message', (event) => {
