@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/polkadex-second-tranche/static/css/main.2c1f067f.chunk.css",
+    "main.js": "/polkadex-second-tranche/static/js/main.8f38dac0.chunk.js",
+    "main.js.map": "/polkadex-second-tranche/static/js/main.8f38dac0.chunk.js.map",
+    "runtime-main.js": "/polkadex-second-tranche/static/js/runtime-main.36c2cff9.js",
+    "runtime-main.js.map": "/polkadex-second-tranche/static/js/runtime-main.36c2cff9.js.map",
+    "static/js/2.7a6da735.chunk.js": "/polkadex-second-tranche/static/js/2.7a6da735.chunk.js",
+    "static/js/2.7a6da735.chunk.js.map": "/polkadex-second-tranche/static/js/2.7a6da735.chunk.js.map",
+    "index.html": "/polkadex-second-tranche/index.html",
+    "precache-manifest.e56cb375e2af9c3bf827687b710fc6ef.js": "/polkadex-second-tranche/precache-manifest.e56cb375e2af9c3bf827687b710fc6ef.js",
+    "service-worker.js": "/polkadex-second-tranche/service-worker.js",
+    "static/css/main.2c1f067f.chunk.css.map": "/polkadex-second-tranche/static/css/main.2c1f067f.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.36c2cff9.js",
+    "static/js/2.7a6da735.chunk.js",
+    "static/css/main.2c1f067f.chunk.css",
+    "static/js/main.8f38dac0.chunk.js"
+  ]
+}
